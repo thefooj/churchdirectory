@@ -1,0 +1,6 @@
+
+<ul>
+<% @churches.each do |church| %>
+  <li><%= link_to church.name, church_path(church) %></li>
+<% end -%>
+</ul>

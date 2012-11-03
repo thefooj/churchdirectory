@@ -1,0 +1,82 @@
+<h2><%= @church.name %></h2>
+
+<h3>Members</h3>
+
+<% 
+  @numcolumns = 3
+  @numrows = 10
+  @columngap = "30px;"
+  @columnwidth = "320px;"
+%>
+
+<style>
+.multicolumn {
+    -webkit-column-count: <%= @numcolumns %>;
+    -moz-column-count: <%= @numcolumns %>;
+    column-count: <%= @numcolumns %>;
+	-webkit-column-width: <%= @columnwidth %>;
+	    -moz-column-width: <%= @columnwidth %>;
+	    column-width: <%= @columnwidth %>;
+    -webkit-column-gap: <%= @columngap %>;
+    -moz-column-gap: <%= @columngap %>;
+    column-gap: <%= @columngap %>;
+}
+.multicolumn-newcolumn {
+	margin-top: 20px;
+    -webkit-column-break-before:always;
+    -moz-column-break-before:always;
+    column-break-before:always;
+}
+</style>
+
+
+<div class="memberlist multicolumn">
+<% @counter = 0 %>
+<% @church.members.each do |m| %>
+  <div class="member <%= 'multicolumn-newcolumn' if @counter != 0 && @counter % @numrows == 0 %>">
+	<div class="maininfo">
+		<div class="name"><%= m.first_name %> <%= m.last_name %></div>
+		<div class="addr">
+		    <% if m.street_address.present? %>
+			<%= m.street_address %><br />
+			<% end -%>
+			<% if m.city.present? %>
+			<%= m.city %>,
+			<% end -%> 
+			<%= m.state %> <%= m.zip_code %>
+		</div>
+		<div class="contact">
+			<% if m.email_address.present? -%>
+			<%= mail_to m.email_address %><br />
+			<% end -%>
+			<% if m.phone.present? -%>
+			<%= m.phone %><br />
+			<% end -%>	
+			<% if m.mobile.present? -%>
+			(cell) <%= m.mobile %><br />
+			<% end -%>	
+		</div>
+		<div class="dates">
+			<% if m.membership_date.present? %>
+			Date Joined: <%= m.membership_date %><br />
+			<% end -%>
+			<% if m.date_of_birth.present? -%>
+			Birthday: <%= m.date_of_birth.strftime('%b %-d')%><br />
+			<% end -%>
+			<% if m.anniversary_date.present? -%>
+			Anniversary: <%= m.anniversary_date.strftime('%b %-d')%><br />
+			<% end -%>		
+		</div>
+	</div>
+	<div class="photo">
+		<img src="https://www.churchmembershiponline.com/IndividualImageHandler.ashx?MemberID=<%= m.member_id %>">
+	</div>
+  </div>
+  <% @counter += 1 -%>
+<% end -%>
+</div>
+
+<h3>Inactive Members</h3>
+
+
+<h3>Households and Kiddos</h3>
