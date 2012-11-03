@@ -36,7 +36,11 @@ class Church < ActiveRecord::Base
       columns.each_with_index do |col,idx|
         symbolized_col = col.underscore.to_sym
         if people_columns.include?(symbolized_col.to_s)
-          datahash[symbolized_col] = ss.cell(rownum,idx+1) 
+          val = ss.cell(rownum,idx+1) 
+          if val =~ /[0-9]{1,2}\/\d{1,2}\/\d{4}/
+            val = Date.strptime(val, '%m/%d/%Y')
+          end
+          datahash[symbolized_col] = val
         end
       end
       newperson = people.build(datahash)
