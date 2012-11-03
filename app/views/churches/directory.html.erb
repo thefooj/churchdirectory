@@ -1,0 +1,73 @@
+<h2><%= @church.name %></h2>
+
+<h3>Members</h3>
+
+<% 
+  @numcolumns = 3
+  @numrows = 10
+  @columngap = "30px;"
+  @columnwidth = "320px;"
+%>
+
+<style>
+.multicolumn {
+    -webkit-column-count: <%= @numcolumns %>;
+    -moz-column-count: <%= @numcolumns %>;
+    column-count: <%= @numcolumns %>;
+	-webkit-column-width: <%= @columnwidth %>;
+	    -moz-column-width: <%= @columnwidth %>;
+	    column-width: <%= @columnwidth %>;
+    -webkit-column-gap: <%= @columngap %>;
+    -moz-column-gap: <%= @columngap %>;
+    column-gap: <%= @columngap %>;
+}
+.multicolumn-newcolumn {
+	margin-top: 20px;
+    -webkit-column-break-before:always;
+    -moz-column-break-before:always;
+    column-break-before:always;
+}
+</style>
+
+
+<h3>Members</h3>
+
+<div class="memberlist multicolumn">
+<% @counter = 0 %>
+<% @church.members.each do |m| %>
+  <%= render :partial => 'directory_person_entry', :locals => { :person => m } %>
+  <% @counter += 1 -%>
+<% end -%>
+</div>
+
+<hr />
+
+<h3>Inactive Members</h3>
+
+<div class="memberlist multicolumn">
+<% @counter = 0 %>
+<% @church.non_attending_members.each do |m| %>
+  <%= render :partial => 'directory_person_entry', :locals => { :person => m } %>
+  <% @counter += 1 -%>
+<% end -%>
+</div>
+
+<hr />
+
+<h3>Households and Kiddos</h3>
+
+<% @church.sorted_households.each do |hh| %>
+ <% unless hh[:children].empty? %>
+ <div class="household">
+	<div class="name"><%= hh[:full_name] %></div>
+	<% if hh[:head_of_household].anniversary_date.present? %>
+	<div class="anniversary">Anniversary: <%= hh[:head_of_household].anniversary_date.strftime('%B') %> <%= hh[:head_of_household].anniversary_date.day.ordinalize %></div>
+	<% end -%>
+	<div class="kids">
+		<% hh[:children].each do |child| -%>
+		<div class="child"><%= child.first_name %></div>
+		<% end -%>
+	</div>
+ </div>
+ <% end -%>
+<% end -%>

@@ -5,11 +5,18 @@ body {
   line-height: 1.3em;
 }
 
+.success {
+    color: #33ff33;
+}
+.error {
+    color: #ff3333;
+}
 
 
 .member {
     width: 350px;
     min-height: 200px;
+    height: 250px;
     border: solid 1px gray;
     .name {
         font-weight: bold;
@@ -20,7 +27,7 @@ body {
         padding: 5px 10px 5px 10px;
         border: solid 1px green;
         float: left;
-        width: 180px;
+        width: 205px;
     }
     .contact {
         
@@ -31,12 +38,24 @@ body {
     .photo {
         border: solid 1px orange;
         img {
-            width: 110px;
+            width: 100px;
             height: auto;
         }
         margin: 0px;
-        width: 140px;
+        width: 110px;
         float: right;
     }
     clear: both;
+}
+
+.household {
+    .name {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .kids {
+        margin-top: 5px;
+        margin-left: 20px;
+    }
+    margin-bottom: 20px;
 }

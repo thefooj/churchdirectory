@@ -4,7 +4,8 @@ Churchdirectory::Application.routes.draw do
   
   resources :churches, :only => [:show, :index] do
     member do 
-      put 'update_church_data'
+      post 'update_church_data'
+      get 'directory'
     end
   end
 

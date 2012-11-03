@@ -1,0 +1,39 @@
+<div class="member">
+	<div class="maininfo">
+		<div class="name"><%= person.full_name %></div>
+		<div class="addr">
+		    <% if person.street_address.present? %>
+			<%= person.street_address %><br />
+			<% end -%>
+			<% if person.city.present? %>
+			<%= person.city %>,
+			<% end -%> 
+			<%= person.state %> <%= person.zip_code %>
+		</div>
+		<div class="contact">
+			<% if person.email_address.present? -%>
+			<%= mail_to person.email_address %><br />
+			<% end -%>
+			<% if person.phone.present? -%>
+			<%= person.phone %><br />
+			<% end -%>	
+			<% if person.mobile.present? -%>
+			(cell) <%= person.mobile %><br />
+			<% end -%>	
+		</div>
+		<div class="dates">
+			<% if person.membership_date.present? %>
+			Date Joined: <%= person.membership_date %><br />
+			<% end -%>
+			<% if person.date_of_birth.present? -%>
+			Birthday: <%= person.date_of_birth.strftime('%b %-d')%><br />
+			<% end -%>
+			<% if person.anniversary_date.present? -%>
+			Anniversary: <%= person.anniversary_date.strftime('%b %-d')%><br />
+			<% end -%>		
+		</div>
+	</div>
+	<div class="photo">
+		<img src="https://www.churchmembershiponline.com/IndividualImageHandler.ashx?MemberID=<%= person.member_id %>">
+	</div>
+</div>

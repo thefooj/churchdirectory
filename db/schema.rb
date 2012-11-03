@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103032537) do
+ActiveRecord::Schema.define(:version => 20121103191458) do
 
   create_table "churches", :force => true do |t|
     t.string "name"
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(:version => 20121103032537) do
     t.string  "state"
     t.string  "country_name"
     t.string  "notes"
+    t.string  "sort_name"
+    t.boolean "is_head_of_household",           :default => false
+    t.boolean "is_spouse_of_head_of_household", :default => false
   end
 
   add_index "people", ["household_id"], :name => "index_people_on_household_id"

@@ -9,11 +9,11 @@ class Church < ActiveRecord::Base
   end
   
   def members
-    self.people.where(:member_type => 'Member').order("last_name asc, first_name asc")
+    self.people.where(:member_type => 'Member').order("sort_name asc")
   end
 
   def non_attending_members
-    self.people.where(:member_type => 'Non-Attending').order("last_name asc, first_name asc")
+    self.people.where(:member_type => 'Non-Attending').order("sort_name asc")
   end
 
   def sorted_households
@@ -24,9 +24,11 @@ class Church < ActiveRecord::Base
     ss = Excel.new(excel_filename)
     ss.default_sheet = ss.sheets.first
     
-    self.people.delete_all
+    self.people.destroy_all
     
     people_columns = Person.column_names
+    
+    imported_people = []
     
     columns = ss.first_column.upto(ss.last_column).to_a.map {|col| ss.cell(ss.first_row, col)} 
     (ss.first_row + 1).upto(ss.last_row) do |rownum|
@@ -37,7 +39,13 @@ class Church < ActiveRecord::Base
           datahash[symbolized_col] = ss.cell(rownum,idx+1) 
         end
       end
-      self.people.build(datahash).save!
+      newperson = people.build(datahash)
+      newperson.save
+      imported_people << newperson
     end
+    
+    self.people.update_sort_names_and_household_statuses!
+    
+    imported_people
   end
 end

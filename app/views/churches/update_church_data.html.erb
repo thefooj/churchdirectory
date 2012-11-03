@@ -1,0 +1,30 @@
+<h2>Membership Import Results</h2>
+
+<% if @exception.present? -%>
+	<div class="errornotice">
+		<h4><%= @message %></h4>
+	<b><%= @exception.message %></b>
+
+	</div>
+	<div>
+	<%= link_to "Go back and try another file", church_path(@church) %>
+	</div>
+<% else -%>
+	<% @people.each do |person| %>
+	  <li><%= person.full_name %>
+		 <% if person.errors.empty? %>
+		   <span class="success">SUCCESS!</span>
+		 <% else -%>
+		   <span class="error">ERROR</span>
+		   <ul>
+			  <% person.errors.full_messages.each do |msg| -%>
+			    <li><%= msg %></li>
+			  <% end -%>
+		   </ul>
+		 <% end -%>
+	    </li>
+	<% end -%>
+	
+	<%= link_to "Go view the directory", directory_church_path(@church) %>
+
+<% end -%>

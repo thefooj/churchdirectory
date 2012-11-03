@@ -11,3 +11,7 @@ the Excel files that they export, and then display it nicely.
 
 NOTE: The ChurchMembershipOnline.com export must be re-saved as a normal .xls first.
 
+Suggestions for DB Management:
+ - Add birth order number for children so we don't need to store birth year
+ - Make sure any ", Jr." or ", Sr." shoudl be at the end of the first_name.  e.g. Charles "Butch", Sr   not Charles, Sr "Butch"
+ - For those that are adult children consider having them be non-dependents
