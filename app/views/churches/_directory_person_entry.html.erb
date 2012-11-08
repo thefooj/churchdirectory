@@ -1,4 +1,12 @@
 <div class="member">
+	<div class="photo">
+		<% if person.photo.present? %>
+		  <%= image_tag person.photo.url %>
+		<% else -%>
+		  <%= image_tag "/noimage-sheep.jpg" %>
+		<% end -%>
+	</div>
+	
 	<div class="maininfo">
 		<div class="name"><%= person.full_name %></div>
 		<div class="addr">
@@ -32,8 +40,5 @@
 			Anniversary: <%= person.anniversary_date.strftime('%b %-d')%><br />
 			<% end -%>		
 		</div>
-	</div>
-	<div class="photo">
-		<img src="https://www.churchmembershiponline.com/IndividualImageHandler.ashx?MemberID=<%= person.member_id %>">
 	</div>
 </div>

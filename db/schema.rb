@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103191458) do
+ActiveRecord::Schema.define(:version => 20121104134431) do
 
   create_table "churches", :force => true do |t|
     t.string "name"
@@ -21,30 +21,34 @@ ActiveRecord::Schema.define(:version => 20121103191458) do
   add_index "churches", ["urn"], :name => "index_churches_on_urn", :unique => true
 
   create_table "people", :force => true do |t|
-    t.integer "church_id"
-    t.string  "member_id"
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "household_id"
-    t.string  "email_address"
-    t.string  "street_address"
-    t.string  "city"
-    t.string  "zip_code"
-    t.string  "phone"
-    t.string  "mobile"
-    t.string  "member_type"
-    t.string  "member_age_category_name"
-    t.date    "membership_date"
-    t.date    "date_of_birth"
-    t.date    "anniversary_date"
-    t.string  "gender_name"
-    t.string  "marital_status_name"
-    t.string  "state"
-    t.string  "country_name"
-    t.string  "notes"
-    t.string  "sort_name"
-    t.boolean "is_head_of_household",           :default => false
-    t.boolean "is_spouse_of_head_of_household", :default => false
+    t.integer  "church_id"
+    t.string   "member_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "household_id"
+    t.string   "email_address"
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "zip_code"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "member_type"
+    t.string   "member_age_category_name"
+    t.date     "membership_date"
+    t.date     "date_of_birth"
+    t.date     "anniversary_date"
+    t.string   "gender_name"
+    t.string   "marital_status_name"
+    t.string   "state"
+    t.string   "country_name"
+    t.string   "notes"
+    t.string   "sort_name"
+    t.boolean  "is_head_of_household",           :default => false
+    t.boolean  "is_spouse_of_head_of_household", :default => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   add_index "people", ["household_id"], :name => "index_people_on_household_id"

@@ -32,6 +32,7 @@ GEM
     arel (3.0.2)
     builder (3.0.4)
     choice (0.1.6)
+    cocaine (0.4.2)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -80,6 +81,12 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
+    paperclip (3.3.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.4.0)
+      mime-types
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -155,6 +162,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jquery-rails
   mysql2
+  paperclip
   rails (= 3.2.0)
   roo
   ruby-debug19

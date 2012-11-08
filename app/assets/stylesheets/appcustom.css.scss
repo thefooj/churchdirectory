@@ -1,9 +1,26 @@
 
+
 body {
   font-size: 14px;
   font-family: 'Gill Sans / Gill Sans MT', sans-serif;
   line-height: 1.3em;
 }
+
+a {
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+}
+
+@media print {
+  .page-break  { display: block; page-break-after: always; }
+  a {
+      text-decoration: none;
+  }
+}
+
+
 
 .success {
     color: #33ff33;
@@ -14,38 +31,50 @@ body {
 
 
 .member {
+    position: relative;
     width: 350px;
-    min-height: 200px;
-    height: 250px;
-    border: solid 1px gray;
-    .name {
-        font-weight: bold;
-        font-size: 1.1em;
-        margin-bottom: 10px;
-    }
+    min-height: 214px;
+    height: 214px;
     .maininfo {
-        padding: 5px 10px 5px 10px;
-        border: solid 1px green;
-        float: left;
-        width: 205px;
-    }
-    .contact {
-        
-    }
-    .dates {
-        margin-top: 20px;
+        margin-left: 120px;
+        padding: 0px 10px 5px 5px;
+        width: 200px;
+        .name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .contact {
+
+        }
+        .dates {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
     }
     .photo {
-        border: solid 1px orange;
+        position: absolute;
+        top: 0;
+        left: 0px;
         img {
+            vertical-align:text-top;
             width: 100px;
             height: auto;
         }
         margin: 0px;
         width: 110px;
-        float: right;
     }
     clear: both;
+}
+
+.memberlist-matrix {
+    table {
+        border-collapse:collapse;
+    }
+    td {
+        position: relative;
+        vertical-align: top;
+    }
 }
 
 .household {
@@ -58,4 +87,24 @@ body {
         margin-left: 20px;
     }
     margin-bottom: 20px;
+}
+
+.pagenum {
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.titlepage {
+    padding-top: 500px;
+    padding-bottom: 300px;
+    text-align: center;
+    color: #333333;
+    font-family: Century Gothic, sans-serif;
+    h2 {
+        text-align: center;
+    }
+    h3 {
+        text-align: center;
+    }
 }

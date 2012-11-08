@@ -1,59 +1,21 @@
-<h2><%= @church.name %></h2>
-
-
 <% 
-  @numcolumns = 3
-  @numrows = 10
-  @columngap = "30px;"
-  @columnwidth = "320px;"
+  @rows_per_page = 6
+  @cols_per_page = 3
 %>
 
-<style>
-.multicolumn {
-    -webkit-column-count: <%= @numcolumns %>;
-    -moz-column-count: <%= @numcolumns %>;
-    column-count: <%= @numcolumns %>;
-	-webkit-column-width: <%= @columnwidth %>;
-	    -moz-column-width: <%= @columnwidth %>;
-	    column-width: <%= @columnwidth %>;
-    -webkit-column-gap: <%= @columngap %>;
-    -moz-column-gap: <%= @columngap %>;
-    column-gap: <%= @columngap %>;
-}
-.multicolumn-newcolumn {
-	margin-top: 20px;
-    -webkit-column-break-before:always;
-    -moz-column-break-before:always;
-    column-break-before:always;
-}
-</style>
+	<div class="titlepage  page-break">
+		<img src="http://delraybaptist.org/wp-content/uploads/drbclogo3gold-01.png">
+		<h2>Membership Directory</h2>
+		<h3>Last Updated <%= Date.today.strftime('%B %-d, %Y') %></h3>
+	</div>
 
+	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Members", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page } %>
 
-<h3>Members</h3>
-
-<div class="memberlist multicolumn">
-<% @counter = 0 %>
-<% @church.members.each do |m| %>
-  <%= render :partial => 'directory_person_entry', :locals => { :person => m } %>
-  <% @counter += 1 -%>
-<% end -%>
-</div>
+    <%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Inactive Members", :page_num_extra => "(Inactive Members)", :memberlist => @church.non_attending_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page } %>
 
 <hr />
 
-<h3>Inactive Members</h3>
-
-<div class="memberlist multicolumn">
-<% @counter = 0 %>
-<% @church.non_attending_members.each do |m| %>
-  <%= render :partial => 'directory_person_entry', :locals => { :person => m } %>
-  <% @counter += 1 -%>
-<% end -%>
-</div>
-
-<hr />
-
-<h3>Households and Kiddos</h3>
+<h3>Households and Children</h3>
 
 <% @church.sorted_households.each do |hh| %>
  <% unless hh[:children].empty? %>

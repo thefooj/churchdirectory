@@ -1,0 +1,22 @@
+<% objects_to_pages_columns_and_rows(memberlist, rows_per_page, cols_per_page).each do |pagedata| %>
+<div class="members-page  page-break" id="members-page-<%= pagedata[:pagenum] %>">
+	<h2><%= title %></h2>
+ 	   <table class="memberlist-matrix" id="members-page-table-<%= pagedata[:pagenum] %>">
+   <% pagedata[:matrix].each do |row| %>
+      <tr>
+      <% rowblanks = @cols_per_page - row.count -%>
+      <% row.each do |col| %>
+         <td>
+		  <%= render :partial => 'directory_person_entry', :locals => { :person => col } %>
+	     </td>
+      <% end -%>
+      <% rowblanks.times do -%>
+         <td>&nbsp;</td>
+      <% end -%>
+      </tr>
+   <% end -%>
+   </table>
+
+   <div class="pagenum">Page <%= pagedata[:pagenum] %> <%= page_num_extra if defined?(page_num_extra) %></div>
+</div>
+<% end -%>

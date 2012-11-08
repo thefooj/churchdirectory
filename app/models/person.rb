@@ -1,5 +1,13 @@
+
+require 'open-uri'
+require 'digest/md5'
+
 class Person < ActiveRecord::Base
   belongs_to :church
+  
+  MD5_DIGEST_OF_NO_IMAGE_FILE = "a8ff3c35f2ca9535980cea9caf5c9df8"
+  
+  has_attached_file :photo
   
   def full_name
     extracted_suffix = ""
@@ -8,6 +16,26 @@ class Person < ActiveRecord::Base
       extracted_suffix = $1
     end
     "#{self.first_name.gsub(/\, .+$/,'')} #{self.last_name}#{extracted_suffix}"
+  end
+
+  def update_photo_from_server!
+    
+    
+    the_url = "https://www.churchmembershiponline.com/IndividualImageHandler.ashx?MemberID=#{self.member_id}"
+
+    tmp_file_name = "#{Rails.root}/tmp/tmpfile#{Digest::MD5.hexdigest(the_url.to_s)}.jpg"
+    tmp_file = open(tmp_file_name, "wb") {|f| f.write(open(the_url).read)}
+    file_md5 = Digest::MD5.file(tmp_file_name).hexdigest
+    
+    if file_md5 != MD5_DIGEST_OF_NO_IMAGE_FILE
+      the_file = File.open(tmp_file_name, "rb")
+      self.photo = the_file
+      the_file.close
+    else
+      self.photo = nil
+    end
+    self.save!    
+    File.delete(tmp_file_name)    
   end
 
   def self.update_sort_names_and_household_statuses!

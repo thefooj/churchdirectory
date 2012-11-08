@@ -45,6 +45,7 @@ class Church < ActiveRecord::Base
       end
       newperson = people.build(datahash)
       newperson.save
+      newperson.update_photo_from_server!
       imported_people << newperson
     end
     
