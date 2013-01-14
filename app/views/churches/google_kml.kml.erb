@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+ <% @members_by_address.each do |addy,members| -%>
+  <Placemark>
+    <description><![CDATA[
+	  <ul style="list-style-type: none; margin-left: 2px; padding-left: 0px;">
+	   <% members.each do |mem| -%>
+         <li style="min-height: 70px; margin-left: 2px; padding-left: 0px;"><img align="middle" style="margin-right: 5px; vertical-align: middle;" src="https://www.churchmembershiponline.com/IndividualImageHandler.ashx?MemberID=<%= mem.member_id %>" width="50"><b><%= mem.full_name %></b></li>
+       <% end -%>
+      </ul>
+      <p><%= addy %></p>
+		        ]]></description>
+    <Point>
+      <coordinates><%= members.first.longitude %>,<%= members.first.latitude %>,0</coordinates>
+    </Point>
+  </Placemark>
+ <% end -%>
+</Document>
+</kml>

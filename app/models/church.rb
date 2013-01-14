@@ -8,6 +8,18 @@ class Church < ActiveRecord::Base
     self.urn
   end
   
+  def members_by_address
+    address_hash = {}
+    self.members.each do |mem|
+      addy = mem.full_address
+      if addy.present?
+        address_hash[addy] ||= []
+        address_hash[addy] << mem
+      end
+    end
+    return address_hash
+  end
+  
   def members
     self.people.where(:member_type => 'Member').order("sort_name asc")
   end
@@ -50,6 +62,14 @@ class Church < ActiveRecord::Base
     end
     
     self.people.update_sort_names_and_household_statuses!
+    
+    self.people.each do |p|
+      unless p.full_address.nil?
+        p.geocode
+        p.save
+        sleep(2)
+      end
+    end
     
     imported_people
   end

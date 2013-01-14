@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104134431) do
+ActiveRecord::Schema.define(:version => 20130114034430) do
 
   create_table "churches", :force => true do |t|
     t.string "name"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20121104134431) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.float    "longitude"
+    t.float    "latitude"
   end
 
   add_index "people", ["household_id"], :name => "index_people_on_household_id"

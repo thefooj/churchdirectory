@@ -8,6 +8,11 @@ class ChurchesController < ApplicationController
 
   end
   
+  def google_kml
+    get_church or show_404
+    @members_by_address = @church.members_by_address
+  end
+  
   def directory
     get_church or show_404
 

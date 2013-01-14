@@ -4,10 +4,22 @@ require 'digest/md5'
 
 class Person < ActiveRecord::Base
   belongs_to :church
-  
+  geocoded_by :full_address
+
   MD5_DIGEST_OF_NO_IMAGE_FILE = "a8ff3c35f2ca9535980cea9caf5c9df8"
   
   has_attached_file :photo
+
+  def self.geocode_all
+    self.not_geocoded.order("sort_name asc").all.each do |p|
+      unless p.full_address.blank?
+        puts "Geocoding #{p.sort_name} - #{p.full_address}"
+        p.geocode
+        p.save!
+        sleep(2) # prevent geocode quota errors
+      end
+    end
+  end
   
   def full_name
     extracted_suffix = ""
@@ -17,6 +29,15 @@ class Person < ActiveRecord::Base
     end
     "#{self.first_name.gsub(/\, .+$/,'')} #{self.last_name}#{extracted_suffix}"
   end
+
+  def full_address
+    if street_address.present? && street_address != 'Unknown' && street_address !~ /P.O. Box/ && city.present? && state.present? && zip_code.present?
+      "#{street_address}, #{city}, #{state}, #{zip_code}"
+    else
+      nil
+    end
+  end
+  
 
   def update_photo_from_server!
     
@@ -88,7 +109,7 @@ class Person < ActiveRecord::Base
   end
   
   def self.household_dependents(household_identifier)
-    self.where(:household_id => household_identifier, :member_type => 'Dependent').order("first_name asc")
+    self.where(:household_id => household_identifier, :member_type => 'Dependent').order("date_of_birth asc")
   end
   
   def self.distinct_household_identifiers

@@ -10,6 +10,8 @@
 %>
 
 <%= link_to "View Directory", directory_church_path(@church) %>
+<br />
+<%= link_to "Download Google Earth KML File", google_kml_church_path(@church, :format => 'kml') %>
 
 
 <h3>Update Member Information</h3>
