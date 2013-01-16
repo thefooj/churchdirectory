@@ -5,30 +5,39 @@
 
 	<div class="titlepage  page-break">
 		<img src="http://delraybaptist.org/wp-content/uploads/drbclogo3gold-01.png">
-		<h2>Membership Directory</h2>
-		<h3>Last Updated <%= Date.today.strftime('%B %-d, %Y') %></h3>
+		<h2>Member Directory</h2>
+		<h3>(as of <%= Date.today.strftime('%B %-d, %Y') %>)</h3>
+		
+		<div class="address">
+			2405 Russell Road, Alexandria, VA 22301<br />
+			703-549-8116  &nbsp;&nbsp;&nbsp; www.delraybaptist.org
+		</div>
+		
+		<div class="scripture">
+			"And he came and preached peace to you who were far off and peace to those who were near. For through him we both have access in one Spirit to the Father. So then you are no longer strangers and aliens, but you are fellow citizens with the saints and members of the household of God, built on the foundation of the apostles and prophets, Christ Jesus himself being the cornerstone, in whom the whole structure, being joined together, grows into a holy temple in the Lord."
+			 Ephesians 2:17-21 ESV
+		</div>
 	</div>
 
-	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Members", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page } %>
+	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Members as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page } %>
 
-    <%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Inactive Members", :page_num_extra => "(Inactive Members)", :memberlist => @church.non_attending_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page } %>
 
-<hr />
+	<div class="members-page" id="members-page-households" style="min-height: 1000px;">
+		<h2><%= @church.name %> Households and Children</h2>
 
-<h3>Households and Children</h3>
-
-<% @church.sorted_households.each do |hh| %>
- <% unless hh[:children].empty? %>
- <div class="household">
-	<div class="name"><%= hh[:full_name] %></div>
-	<% if hh[:head_of_household].anniversary_date.present? %>
-	<div class="anniversary">Anniversary: <%= hh[:head_of_household].anniversary_date.strftime('%B') %> <%= hh[:head_of_household].anniversary_date.day.ordinalize %></div>
-	<% end -%>
-	<div class="kids">
-		<% hh[:children].each do |child| -%>
-		<div class="child"><%= child.first_name %></div>
+		<% @church.sorted_households.each do |hh| %>
+		 <% unless hh[:children].empty? %>
+		 <div class="household">
+			<div class="name"><%= hh[:full_name] %></div>
+			<% if hh[:head_of_household].anniversary_date.present? %>
+			<div class="anniversary">Anniversary: <%= hh[:head_of_household].anniversary_date.strftime('%B') %> <%= hh[:head_of_household].anniversary_date.day.ordinalize %></div>
+			<% end -%>
+			<div class="kids">
+				<% hh[:children].each do |child| -%>
+				<div class="child"><%= child.first_name %>, <%= child.date_of_birth.strftime('%b %-d') %></div>
+				<% end -%>
+			</div>
+		 </div>
+		 <% end -%>
 		<% end -%>
 	</div>
- </div>
- <% end -%>
-<% end -%>

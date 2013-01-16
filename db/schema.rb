@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114034430) do
+ActiveRecord::Schema.define(:version => 20130116141232) do
 
   create_table "churches", :force => true do |t|
     t.string "name"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(:version => 20130114034430) do
   end
 
   add_index "churches", ["urn"], :name => "index_churches_on_urn", :unique => true
+
+  create_table "geocode_caches", :force => true do |t|
+    t.string "key"
+    t.text   "value"
+  end
+
+  add_index "geocode_caches", ["key"], :name => "index_geocode_caches_on_key"
 
   create_table "people", :force => true do |t|
     t.integer  "church_id"

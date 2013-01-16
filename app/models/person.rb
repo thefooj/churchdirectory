@@ -16,7 +16,6 @@ class Person < ActiveRecord::Base
         puts "Geocoding #{p.sort_name} - #{p.full_address}"
         p.geocode
         p.save!
-        sleep(2) # prevent geocode quota errors
       end
     end
   end

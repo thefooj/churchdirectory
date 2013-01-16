@@ -21,6 +21,10 @@ class Church < ActiveRecord::Base
   end
   
   def members
+    self.people.where(:member_type => ['Member', 'Non-Attending']).order("sort_name asc")
+  end
+
+  def attending_members
     self.people.where(:member_type => 'Member').order("sort_name asc")
   end
 
@@ -66,8 +70,7 @@ class Church < ActiveRecord::Base
     self.people.each do |p|
       unless p.full_address.nil?
         p.geocode
-        p.save
-        sleep(2)
+        p.save!
       end
     end
     
