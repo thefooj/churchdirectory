@@ -15,3 +15,24 @@ Suggestions for DB Management:
  - Add birth order number for children so we don't need to store birth year
  - Make sure any ", Jr." or ", Sr." shoudl be at the end of the first_name.  e.g. Charles "Butch", Sr   not Charles, Sr "Butch"
  - For those that are adult children consider having them be non-dependents
+
+
+### Heroku Deployment
+
+```bash
+git push heroku master
+heroku rake db:migrate
+heroku restart
+```
+
+Set up a church:
+
+```bash
+heroku rake setup_church[churchurn,"Church Name"]
+```
+
+Debugging:
+
+```bash
+heroku logs
+```
