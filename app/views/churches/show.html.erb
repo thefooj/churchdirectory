@@ -2,6 +2,8 @@
 
 <h3>Members</h3>
 
+<b>Number of entries: <%= @church.people.count %></b><br /><br />
+
 <% 
   @numcolumns = 3
   @numrows = 10
@@ -22,6 +24,17 @@
   <p>Please re-save the ChurchDirectoryOnline file as a proper 2004-2007 Excel .xls document</p>
 
   <%= submit_tag "Upload XLS File and Batch-Update", :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
+<% end -%>
+
+<br />
+<hr />
+<br />
+
+<h3>Clear Out Member Information</h3>
+
+<%= form_tag clear_church_data_church_path(@church), :method => :post do %>
+  <p>Once you have created a printed PDF of the directory and downloaded the Google Earth file, you should clear out the data...</p>
+  <%= submit_tag "Clear out member information", :confirm => 'Are you sure?', :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
 <% end -%>
 
 

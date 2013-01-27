@@ -7,6 +7,7 @@ Churchdirectory::Application.routes.draw do
       post 'update_church_data'
       get 'directory'
       get 'google_kml'
+      post 'clear_church_data'
     end
   end
 

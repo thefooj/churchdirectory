@@ -21,6 +21,13 @@ class ChurchesController < ApplicationController
     @households = @church.sorted_households    
   end
   
+  def clear_church_data
+    get_church or show_404
+    
+    Person.delete_all(:church_id => @church.id)
+    redirect_to church_path(@church)
+  end
+  
   def update_church_data
     get_church or show_404
     

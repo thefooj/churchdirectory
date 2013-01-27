@@ -28,7 +28,7 @@ heroku restart
 Set up a church:
 
 ```bash
-heroku rake setup_church[churchurn,"Church Name"]
+heroku rake setup_church[churchurn,DRBC]  # won't let you have spaces and quotes
 ```
 
 Debugging:
