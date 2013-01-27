@@ -27,6 +27,8 @@ gem 'paperclip'
 gem 'geocoder' 
 
 group :development, :test do
+  gem 'capistrano'
+  gem 'capistrano_colors'
   gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
