@@ -21,7 +21,7 @@ Suggestions for DB Management:
 
 ```bash
 git push heroku master
-heroku rake db:migrate
+heroku run rake db:migrate
 heroku restart
 ```
 
