@@ -183,6 +183,7 @@ DEPENDENCIES
   geocoder
   jquery-rails
   mysql2
+  nokogiri
   paperclip
   pg
   rails (= 3.2.11)

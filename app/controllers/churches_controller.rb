@@ -34,14 +34,15 @@ class ChurchesController < ApplicationController
     @results = []
     @message = ""
     @exception = nil
-    if request.post? && params[:xlsfile].present? && params[:xlsfile].original_filename =~ /\.xls$/
+    if request.post? && params[:xmlfile].present? && params[:xmlfile].original_filename =~ /\.xml$/
       begin
-        localtmpfilename = "#{Rails.root}/tmp/#{rand(1000000000)}.xls"
-        FileUtils.cp("#{params[:xlsfile].path}", localtmpfilename)
-        @people = @church.import_directory_info_from_church_membership_online(localtmpfilename)
+        localtmpfilename = "#{Rails.root}/tmp/#{rand(1000000000)}.xml"
+        FileUtils.cp("#{params[:xmlfile].path}", localtmpfilename)
+        @people = @church.import_directory_info_from_church_membership_online_xml(localtmpfilename)
         @message = "Successfully imported your file.  Please see below for details."
       rescue => e
         @message = "Problem uploading -- Please check your file"
+        Rails.logger.debug("Error:" + e.backtrace.join("\n"))
         @exception = e 
       end
     else

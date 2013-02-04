@@ -36,6 +36,36 @@ class Church < ActiveRecord::Base
     self.people.sorted_households
   end
   
+  def import_directory_info_from_church_membership_online_xml(xml_filename)
+    self.people.destroy_all
+    xmldoc = Nokogiri::XML(File.read(xml_filename))
+    cols = ['MemberID','FirstName','LastName','HouseholdID','StreetAddress','City','ZipCode','Phone','Mobile','MemberType','MemberAgeCategoryName','MaritalStatusName','GenderName','State','CountryName','Notes']
+    
+    imported_people = []
+    
+    xmldoc.xpath('//xmlns:Individuals', 'xmlns' => 'http://tempuri.org/IndividualExportDataObject.xsd').each do |indiv|
+      datahash = {}
+      cols.each do |c|
+        datahash[c.underscore.to_sym] = indiv.css(c).text.strip
+      end
+      newperson = people.build(datahash)
+      newperson.save
+      newperson.update_photo_from_server!
+      imported_people << newperson
+    end
+    
+    self.people.update_sort_names_and_household_statuses!
+    
+    self.people.each do |p|
+      unless p.full_address.nil?
+        p.geocode
+        p.save!
+      end
+    end
+    
+    imported_people
+  end
+  
   def import_directory_info_from_church_membership_online(excel_filename)
     ss = Excel.new(excel_filename)
     ss.default_sheet = ss.sheets.first

@@ -7,7 +7,7 @@ gem 'rails', '3.2.11'
 
 gem 'mysql2'
 gem 'roo'
-
+gem 'nokogiri'
 
 gem "pg", :group => :production
 
