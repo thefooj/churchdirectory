@@ -19,11 +19,11 @@
 <h3>Update Member Information</h3>
 
 <%= form_tag update_church_data_church_path(@church), :multipart => true do %>
-  File to upload: <span style="border: dashed 1px gray; font-size: 12px; padding: 10px;"><%= file_field_tag "xmlfile", :style => "font-size: 12px;" %></span>
+  File to upload: <span style="border: dashed 1px gray; font-size: 12px; padding: 10px;"><%= file_field_tag "csvfile", :style => "font-size: 12px;" %></span>
   <br />
-  <p>Download the XML version of the file</p>
+  <p>Download the CSV version of the file</p>
 
-  <%= submit_tag "Upload XML File and Batch-Update", :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
+  <%= submit_tag "Upload CSV File and Batch-Update", :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
 <% end -%>
 
 <br />

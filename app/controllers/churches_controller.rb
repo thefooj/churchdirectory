@@ -34,11 +34,11 @@ class ChurchesController < ApplicationController
     @results = []
     @message = ""
     @exception = nil
-    if request.post? && params[:xmlfile].present? && params[:xmlfile].original_filename =~ /\.xml$/
+    if request.post? && params[:csvfile].present? && params[:csvfile].original_filename =~ /\.csv$/
       begin
-        localtmpfilename = "#{Rails.root}/tmp/#{rand(1000000000)}.xml"
-        FileUtils.cp("#{params[:xmlfile].path}", localtmpfilename)
-        @people = @church.import_directory_info_from_church_membership_online_xml(localtmpfilename)
+        localtmpfilename = "#{Rails.root}/tmp/#{rand(1000000000)}.csv"
+        FileUtils.cp("#{params[:csvfile].path}", localtmpfilename)
+        @people = @church.import_directory_info_from_church_membership_online_csv(localtmpfilename)
         @message = "Successfully imported your file.  Please see below for details."
       rescue => e
         @message = "Problem uploading -- Please check your file"
