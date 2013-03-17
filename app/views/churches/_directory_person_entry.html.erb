@@ -3,7 +3,7 @@
 		<% if person.photo.present? %>
 		  <%= image_tag person.photo.url %>
 		<% else -%>
-		  <%= image_tag "/noimage-sheep.jpg" %>
+		  <%= image_tag "/noimage-crown.jpg" %>
 		<% end -%>
 	</div>
 	
@@ -11,12 +11,12 @@
 		<div class="name"><%= person.full_name %></div>
 		<div class="addr">
 		    <% if person.street_address.present? %>
-			<%= person.street_address %><br />
+			<%= person.street_address_short %><br />
 			<% end -%>
 			<% if person.city.present? %>
 			<%= person.city %>,
 			<% end -%> 
-			<%= person.state %> <%= person.zip_code %>
+			<%= person.state_abbrev %> <%= person.zip_code_short %>
 		</div>
 		<div class="contact">
 			<% if person.email_address.present? -%>
@@ -26,7 +26,7 @@
 			<%= person.phone %><br />
 			<% end -%>	
 			<% if person.mobile.present? -%>
-			(cell) <%= person.mobile %><br />
+			 <%= person.mobile %><br />
 			<% end -%>	
 		</div>
 		<div class="dates" style="display: none;">

@@ -6,9 +6,89 @@ class Person < ActiveRecord::Base
   belongs_to :church
   geocoded_by :full_address
 
-  MD5_DIGEST_OF_NO_IMAGE_FILE = "a8ff3c35f2ca9535980cea9caf5c9df8"
+  MD5_DIGEST_OF_NO_IMAGE_FILE = [
+    "a8ff3c35f2ca9535980cea9caf5c9df8",
+    "52ad514186f9c1ca36a9f4c01066f705",
+    "5662d2835c2a8052cb8859540044dac0",
+    "50e9848299e06afc03f015229be7bfe0",
+    "08e8346f9e0447d6ca631ba843c4ab77"
+  ]
   
   has_attached_file :photo
+
+  def self.street_abbreviations
+    @street_abbrev ||= {
+      'Avenue' => 'Ave',
+      'Boulevard' => 'Blvd',
+      'Court' => 'Ct',
+      'Drive' => 'Dr',
+      'Expressway' => 'Expy',
+      'Freeway' => 'Fwy',
+      'Highway' => 'Hwy',
+      'Lane' => 'Ln',
+      'Parkway' => 'Pkwy',
+      'Place' => 'Pl',
+      'Road' => 'Rd',
+      'Square' => 'Sq',
+      'Street' => 'St',
+      'Turnpike' => 'Tpke',
+    }
+  end
+
+  def self.state_abbreviations
+    @state_abbrev ||= states = {
+      "Alabama" => "AL",
+      "Alaska" => "AK",
+      "Arizona" => "AZ",
+      "Arkansas" => "AR",
+      "California" => "CA",
+      "Colorado" => "CO",
+      "Connecticut" => "CT",
+      "Delaware" => "DE",
+      "Florida" => "FL",
+      "Georgia" => "GA",
+      "Hawaii" => "HI",
+      "Idaho" => "ID",
+      "Illinois" => "IL",
+      "Indiana" => "IN",
+      "Iowa" => "IA",
+      "Kansas" => "KS",
+      "Kentucky" => "KY",
+      "Louisiana" => "LA",
+      "Maine" => "ME",
+      "Maryland" => "MD",
+      "Massachusetts" => "MA",
+      "Michigan" => "MI",
+      "Minnesota" => "MN",
+      "Mississippi" => "MS",
+      "Missouri" => "MO",
+      "Montana" => "MT",
+      "Nebraska" => "NE",
+      "Nevada" => "NV",
+      "New Hampshire" => "NH",
+      "New Jersey" => "NJ",
+      "New Mexico" => "NM",
+      "New York" => "NY",
+      "North Carolina" => "NC",
+      "North Dakota" => "ND",
+      "Ohio" => "OH",
+      "Oklahoma" => "OK",
+      "Oregon" => "OR",
+      "Pennsylvania" => "PA",
+      "Rhode Island" => "RI",
+      "South Carolina" => "SC",
+      "South Dakota" => "SD",
+      "Tennessee" => "TN",
+      "Texas" => "TX",
+      "Utah" => "UT",
+      "Vermont" => "VT",
+      "Virginia" => "VA",
+      "Washington" => "WA",
+      "West Virginia" => "WV",
+      "Wisconsin" => "WI",
+      "Wyoming" => "WY"
+    }
+  end
 
   def self.geocode_all
     self.not_geocoded.order("sort_name asc").all.each do |p|
@@ -37,6 +117,26 @@ class Person < ActiveRecord::Base
     end
   end
   
+  def state_abbrev
+    return "" if self.state.blank?
+    self.class.state_abbreviations[self.state]
+  end
+  
+  def street_address_short
+    thestreet = self.street_address
+    self.class.street_abbreviations.each_pair do |str, abbrev|
+      if thestreet =~ / #{str}$/i
+        thestreet = thestreet.gsub(/ #{str}$/, " #{abbrev}")
+      end
+    end
+    return thestreet
+  end
+  
+  def zip_code_short
+    return "" if self.zip_code.blank?
+    self.zip_code.gsub(/\-\d+$/,'')
+  end
+
 
   def update_photo_from_server!
     
@@ -47,7 +147,7 @@ class Person < ActiveRecord::Base
     tmp_file = open(tmp_file_name, "wb") {|f| f.write(open(the_url).read)}
     file_md5 = Digest::MD5.file(tmp_file_name).hexdigest
     
-    if file_md5 != MD5_DIGEST_OF_NO_IMAGE_FILE
+    if !MD5_DIGEST_OF_NO_IMAGE_FILE.include?(file_md5)
       the_file = File.open(tmp_file_name, "rb")
       self.photo = the_file
       the_file.close
