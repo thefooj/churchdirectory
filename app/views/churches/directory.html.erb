@@ -26,19 +26,35 @@
 	<div class="members-page" id="members-page-households" style="min-height: 1000px;">
 		<h2><%= @church.name %> Households and Children</h2>
 
+		<table id="households-listing" style="">
+			<tr>
+				<td valign="top" align="left">
+		<% @hh_lines_iter = 0 -%>
+		<% @hh_lines_per_col = 60 -%>
 		<% @church.sorted_households.each do |hh| %>
 		 <% unless hh[:children].empty? %>
+		
+		 <% if @hh_lines_iter > @hh_lines_per_col %>
+		        </td>
+		        <td valign="top" align="left">
+			  <% @hh_lines_iter = 0 %>
+		 <% end %>
 		 <div class="household">
 			<div class="name"><%= hh[:full_name] %></div>
+			<% @hh_lines_iter += 2 %>
 			<% if hh[:head_of_household].anniversary_date.present? %>
 			<div class="anniversary">Anniversary: <%= hh[:head_of_household].anniversary_date.strftime('%B') %> <%= hh[:head_of_household].anniversary_date.day.ordinalize %></div>
 			<% end -%>
 			<div class="kids">
 				<% hh[:children].each do |child| -%>
 				<div class="child"><%= child.first_name %></div>
+				<% @hh_lines_iter += 1 %>
 				<% end -%>
 			</div>
 		 </div>
 		 <% end -%>
 		<% end -%>
+				</td>
+			</tr>
+		</table>
 	</div>

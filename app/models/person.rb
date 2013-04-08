@@ -45,6 +45,8 @@ class Person < ActiveRecord::Base
       "Colorado" => "CO",
       "Connecticut" => "CT",
       "Delaware" => "DE",
+      "District of Columbia" => "DC",
+      "Washington D.C." => "DC",
       "Florida" => "FL",
       "Georgia" => "GA",
       "Hawaii" => "HI",
