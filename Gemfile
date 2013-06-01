@@ -9,7 +9,7 @@ gem 'mysql2'
 gem 'nokogiri'
 
 gem "pg", :group => :production
-
+gem "wicked_pdf"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -26,7 +26,7 @@ gem 'jquery-rails'
 gem 'paperclip'
 
 gem 'geocoder' 
-
+gem 'devise'
 group :development, :test do
   gem 'capistrano'
   gem 'capistrano_colors'

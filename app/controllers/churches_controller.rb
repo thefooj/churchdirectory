@@ -15,11 +15,14 @@ class ChurchesController < ApplicationController
   
   def directory
     get_church or show_404
-
-    @members = @church.members
-    @non_attending_members = @church.non_attending_members
-    @households = @church.sorted_households    
+    get_members
   end
+  
+  def mobile_directory
+    get_church or show_404
+    get_members
+  end
+
   
   def clear_church_data
     get_church or show_404
@@ -57,4 +60,11 @@ class ChurchesController < ApplicationController
     return false if @church.nil?
     @church
   end
+  
+  def get_members
+    @members = @church.members
+    @non_attending_members = @church.non_attending_members
+    @households = @church.sorted_households    
+  end
+  
 end
