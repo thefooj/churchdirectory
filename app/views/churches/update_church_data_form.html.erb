@@ -1,0 +1,16 @@
+<h3>Update Member Information</h3>
+
+<p>Download the CSV export from ChurchMembershipOnline</p>
+
+<%= form_tag update_church_data_church_path(@church), :multipart => true do %>
+  File to upload: <span style="border: dashed 1px gray; font-size: 12px; padding: 10px;"><%= file_field_tag "csvfile", :style => "font-size: 12px;" %></span>
+  <br />
+
+<br />
+  <%= submit_tag "Upload and Batch-Update", :disable_with => 'Processing... will take some time', :class => 'button', :style => "font-size: 14px; margin-top: 20px;" %>
+<% end -%>
+
+<br />
+<br />
+<br />
+<br />

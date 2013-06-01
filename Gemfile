@@ -27,6 +27,8 @@ gem 'paperclip'
 
 gem 'geocoder' 
 gem 'devise'
+gem 'jquery-rails'
+
 group :development, :test do
   gem 'capistrano'
   gem 'capistrano_colors'

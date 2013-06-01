@@ -31,6 +31,11 @@ class ChurchesController < ApplicationController
     redirect_to church_path(@church)
   end
   
+  def update_church_data_form
+    get_church or show_404
+    
+  end
+  
   def update_church_data
     get_church or show_404
     

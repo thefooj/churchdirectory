@@ -1,8 +1,5 @@
 <h2><%= @church.name %></h2>
 
-<h3>Members</h3>
-
-<b>Number of entries: <%= @church.people.count %></b><br /><br />
 
 <% 
   @numcolumns = 3
@@ -11,31 +8,66 @@
   @columnwidth = "320px;"
 %>
 
-<%= link_to "View Directory", directory_church_path(@church) %>
+<style>
+div.action_option_icon {
+
+	width: 150px;
+	height: 150px;
+/*	border: 2px solid #666;
+	 border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	*/
+	margin-bottom: 10px;
+}
+table.action_option td {
+	padding: 10px;
+	padding-right: 30px;
+}
+img.option_image {border:1px solid #a0a0a0;
+-webkit-border-radius: 20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+img.option_image:hover {
+	border: 1px solid #333;
+}
+</style>
+
+<table class="action_option" border="0">
+	<tr>
+		<td valign="top" align="center">
+<%= link_to image_tag(asset_path('OptionDirectorySquare.png'), :class => 'option_image'), directory_church_path(@church), :class => 'popupwindow', :rel => 'scrollbars:1,height:700,width:1100' %>
 <br />
-<%= link_to "Download Google Earth KML File", google_kml_church_path(@church, :format => 'kml') %>
+<%= link_to "View+Print Directory", directory_church_path(@church), :class => 'popupwindow', :rel => 'scrollbars:1,height:700,width:1100' %>
 <br />
-<small>Printing in booklet form: <a href="http://helpx.adobe.com/acrobat/kb/print-booklets-acrobat-reader.html">click here for instructions</a>
+<small><%= link_to "Printing Help", "#printhelp", :class => 'fancybox'%></small>
 
-<h3>Update Member Information</h3>
-
-<%= form_tag update_church_data_church_path(@church), :multipart => true do %>
-  File to upload: <span style="border: dashed 1px gray; font-size: 12px; padding: 10px;"><%= file_field_tag "csvfile", :style => "font-size: 12px;" %></span>
-  <br />
-  <p>Download the CSV version of the file</p>
-
-  <%= submit_tag "Upload CSV File and Batch-Update", :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
-<% end -%>
-
+        </td>
+		<td valign="top" align="center">
+<%= link_to image_tag(asset_path('OptionGoogleEarthSquare.png'), :class => 'option_image'), google_kml_church_path(@church, :format => 'kml') %>
 <br />
-<hr />
+<%= link_to "Google Earth KML File", google_kml_church_path(@church, :format => 'kml') %>
 <br />
-
-<h3>Clear Out Member Information</h3>
-
-<%= form_tag clear_church_data_church_path(@church), :method => :post do %>
-  <p>Once you have created a printed PDF of the directory and downloaded the Google Earth file, you should clear out the data...</p>
-  <%= submit_tag "Clear out member information", :confirm => 'Are you sure?', :disable_with => 'Processing... will take some time', :style => "margin-top: 20px;" %>
-<% end -%>
+         </td>
+   </tr>
+</table>
 
 
+<div id="printhelp" style="display: none;">
+	<h4>Directory Printing Help</h4>
+	
+	<p>To print the directory, click the button above to show the directory.  </p>
+	<p>Then use your normal browser printing.  You will want to set browser printing options to avoid junk in the margins.
+	</p>
+	
+	<p>If you want to print in booklet form, you can go <a href="http://helpx.adobe.com/acrobat/kb/print-booklets-acrobat-reader.html">here</a> for some options</p>
+</div>
+
+
+<br /><br />
+
+<h4 style="margin-bottom: 5px;">Admin Tools:</h4>
+<ul>
+<li><%= link_to "Update Member Info", update_church_data_form_church_path(@church), :class => 'fancybox fancybox.iframe' %></li>
+</ul>
