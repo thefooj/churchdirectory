@@ -8,14 +8,14 @@ default_run_options[:pty] = true
 
 set :scm, :git
 set :deploy_via, :remote_cache
-set :repository, "git@github.com:tiostech/tios-core.git"
+set :repository, "git@github.com:thefooj/churchdirectory.git"
 
 set :user, "apache"
 set :use_sudo, false
 
-role :web, "www.thefujitos.com"
-role :db, "www.thefujitos.com"
-role :app, "www.thefujitos.com"
+role :web, "churchdirectory.thefujitos.com"
+role :db, "churchdirectory.thefujitos.com"
+role :app, "churchdirectory.thefujitos.com"
 
 namespace :assets do
   task :precompile, :roles => :web, :except => { :no_release => true } do
