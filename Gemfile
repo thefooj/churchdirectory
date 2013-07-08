@@ -24,7 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'paperclip'
+gem 'paperclip', '>= 3.4.2'
 gem 'aws-sdk'
 
 gem 'geocoder' 
