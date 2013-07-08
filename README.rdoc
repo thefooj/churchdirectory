@@ -16,6 +16,13 @@ Suggestions for DB Management:
  - Make sure any ", Jr." or ", Sr." shoudl be at the end of the first_name.  e.g. Charles "Butch", Sr   not Charles, Sr "Butch"
  - For those that are adult children consider having them be non-dependents
 
+### S3 setup (one-time on Heroku)
+
+```bash
+heroku config:set AWS_BUCKET=your_bucket_name
+heroku config:set AWS_ACCESS_KEY_ID=your_access_key_id
+heroku config:set AWS_SECRET_ACCESS_KEY=your_secret_access_key
+```
 
 ### Heroku Deployment
 

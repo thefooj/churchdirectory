@@ -25,6 +25,7 @@ end
 
 gem 'jquery-rails'
 gem 'paperclip'
+gem 'aws-sdk'
 
 gem 'geocoder' 
 gem 'devise'
