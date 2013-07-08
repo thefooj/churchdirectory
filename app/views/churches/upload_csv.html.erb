@@ -1,0 +1,26 @@
+<h2>Importer File Upload Results</h2>
+
+<% if @exception.present? -%>
+	<div class="errornotice">
+		<h4><%= @message %></h4>
+	<b><%= @exception.message %></b>
+
+	</div>
+	<div>
+	<%= link_to "Go back and try another file", church_path(@church) %>
+	</div>
+<% else -%>
+    <b>Successfully uploaded your file with <%= @the_upload.num_rows %> rows.</b>
+	<p>
+		<%= link_to "Start updating in batches...", handle_upload_update_church_path(@church, :upload_id => @the_upload.id) %>
+    </p>
+
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+
+
+<% end -%>

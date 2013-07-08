@@ -92,15 +92,6 @@ class Person < ActiveRecord::Base
     }
   end
 
-  def self.geocode_all
-    self.not_geocoded.order("sort_name asc").all.each do |p|
-      unless p.full_address.blank?
-        puts "Geocoding #{p.sort_name} - #{p.full_address}"
-        p.geocode
-        p.save!
-      end
-    end
-  end
   
   def full_name
     extracted_suffix = ""
@@ -160,14 +151,15 @@ class Person < ActiveRecord::Base
     File.delete(tmp_file_name)    
   end
 
-  def self.update_sort_names_and_household_statuses!
-    sorted_households.each do |hh|
+  def self.update_sort_names_and_household_statuses!(church_id)
+    sorted_households(church_id).each do |hh|
       hh[:head_of_household].update_attributes!(:is_head_of_household => true)
       if hh[:spouse_of_household].present?
         hh[:spouse_of_household].update_attributes!(:is_spouse_of_head_of_household => true)
       end
     end
-    all.each {|p| p.update_attributes!(:sort_name => p.compute_sort_name)}
+    
+    self.where(:church_id => church_id).each {|p| p.update_attributes!(:sort_name => p.compute_sort_name)}
   end
 
   def compute_sort_name
@@ -176,9 +168,9 @@ class Person < ActiveRecord::Base
       if self.is_head_of_household?
         sort_name = "#{self.last_name}, #{self.first_name} [#{self.household_id}]"
       elsif self.is_spouse_of_head_of_household?
-        sort_name = "#{Person.head_of_household(self.household_id).compute_sort_name} 000 #{self.first_name}"
+        sort_name = "#{Person.head_of_household(self.church_id, self.household_id).compute_sort_name} 000 #{self.first_name}"
       else
-        sort_name = "#{Person.head_of_household(self.household_id).compute_sort_name} #{self.first_name}"
+        sort_name = "#{Person.head_of_household(self.church_id, self.household_id).compute_sort_name} #{self.first_name}"
       end
     end
     sort_name
@@ -188,41 +180,41 @@ class Person < ActiveRecord::Base
     self.household_id.present?
   end
 
-  def self.head_of_household(household_identifier)
+  def self.head_of_household(church_id, household_identifier)
     # the order for finding is:
     #    Adult Married Male
     #    Adult Married Female (husband is not HoH in our system - non-believing spouse, etc)
     #    Adult Single Male w/ kids (divorced with kids, widower, single dad)
     #    Adult Single Female w/ kids (divorced with kids, widow, single mom)
     options = [
-      self.where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Married').first,
-      self.where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first,
-      self.where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Single').first,
-      self.where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Single').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Married').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Single').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Single').first,
     ]
     options.compact.first
   end
   
-  def self.spouse_of_household(household_identifier)
-    head_of_house = self.head_of_household(household_identifier)
-    likely_wife = self.where("id <> ?", head_of_house.id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first
+  def self.spouse_of_household(church_id, household_identifier)
+    head_of_house = self.head_of_household(church_id, household_identifier)
+    likely_wife = self.where(:church_id => church_id).where("id <> ?", head_of_house.id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first
     return likely_wife
   end
   
-  def self.household_dependents(household_identifier)
-    self.where(:household_id => household_identifier, :member_type => 'Dependent').order("date_of_birth asc")
+  def self.household_dependents(church_id, household_identifier)
+    self.where(:church_id => church_id).where(:household_id => household_identifier, :member_type => 'Dependent').order("date_of_birth asc")
   end
   
-  def self.distinct_household_identifiers
-    self.where("household_id is not null").uniq.pluck(:household_id)
+  def self.distinct_household_identifiers(church_id)
+    self.where(:church_id => church_id).where("household_id is not null").uniq.pluck(:household_id)
   end
   
-  def self.sorted_households
-    hhids = self.distinct_household_identifiers
+  def self.sorted_households(church_id)
+    hhids = self.distinct_household_identifiers(church_id)
     households = []
     hhids.each do |hhid|
-      head_oh = head_of_household(hhid)
-      spouse_oh = spouse_of_household(hhid)
+      head_oh = head_of_household(church_id, hhid)
+      spouse_oh = spouse_of_household(church_id, hhid)
       full_name = ""
       if spouse_oh.present?
         if head_oh.last_name == spouse_oh.last_name
@@ -238,7 +230,7 @@ class Person < ActiveRecord::Base
         :full_name => full_name,
         :head_of_household => head_oh,
         :spouse_of_household => spouse_oh,
-        :children => household_dependents(hhid),
+        :children => household_dependents(church_id, hhid),
       }
       households << household
     end

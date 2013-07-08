@@ -6,8 +6,9 @@ Churchdirectory::Application.routes.draw do
   
   resources :churches, :only => [:show, :index] do
     member do 
-      post 'update_church_data'
-      get 'update_church_data_form'
+      post 'upload_csv'
+      get 'upload_csv_form'
+      get 'handle_upload_update'
       get 'directory'
       get 'mobile_directory'
       get 'google_kml'

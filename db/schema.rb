@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601013234) do
+ActiveRecord::Schema.define(:version => 20130708134006) do
 
   create_table "churches", :force => true do |t|
     t.string "name"
@@ -19,6 +19,26 @@ ActiveRecord::Schema.define(:version => 20130601013234) do
   end
 
   add_index "churches", ["urn"], :name => "index_churches_on_urn", :unique => true
+
+  create_table "csv_upload_rows", :force => true do |t|
+    t.integer "csv_upload_id"
+    t.text    "rowtext"
+    t.string  "status"
+  end
+
+  add_index "csv_upload_rows", ["csv_upload_id"], :name => "index_csv_upload_rows_on_csv_upload_id"
+
+  create_table "csv_uploads", :force => true do |t|
+    t.integer  "church_id"
+    t.text     "header"
+    t.integer  "num_rows"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "csv_uploads", ["church_id"], :name => "index_csv_uploads_on_church_id"
+  add_index "csv_uploads", ["status"], :name => "index_csv_uploads_on_status"
 
   create_table "geocode_caches", :force => true do |t|
     t.string "key"
