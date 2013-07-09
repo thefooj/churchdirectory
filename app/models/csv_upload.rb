@@ -18,8 +18,12 @@ class CsvUpload < ActiveRecord::Base
     end
   end
 
+  def percent_complete
+    (100 * (self.csv_upload_rows.where("status = 'Complete'").count).to_f / (self.csv_upload_rows.count).to_f).to_i
+  end
+
   def next_batch_of_incomplete_rows(maxrows=5)
-    therows = self.csv_upload_rows.where("status <> 'Complete'").limit(maxrows).all
+    therows = self.csv_upload_rows.where("status <> 'Complete'").order("id asc").limit(maxrows).all
   end
   
 end

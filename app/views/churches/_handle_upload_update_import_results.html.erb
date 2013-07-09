@@ -1,4 +1,4 @@
-
+  <ul>
 	<% @people_imported.each do |person| %>
 	  <li><%= person.full_name %>
 		 <% if person.errors.empty? %>
@@ -13,8 +13,8 @@
 		 <% end -%>
 	    </li>
 	<% end -%>
-	
+  </ul>
 
 	<% if @the_upload.complete? %>
-			<%= link_to "Continue...", church_path(@church), :target => "_parent" %>
+		<%= link_to "Continue...", church_path(@church), :target => "_parent" %>
 	<% end -%>

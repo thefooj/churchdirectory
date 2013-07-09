@@ -11,6 +11,8 @@ $('#startbutton').hide();
       url: "<%= handle_upload_update_church_path(@church, :upload_id => @the_upload.id) %>",
       dataType: 'script'
     });
+  <% else -%>
+  $("#importresults_msg").html("<%= escape_javascript(render(:partial => 'handle_upload_complete', :format => ['html'])) %>");
   <% end -%>
   $('#importresults_list')[0].scrollTop($('#importresults_list')[0].scrollHeight);
 <% end -%>
