@@ -1,0 +1,20 @@
+
+	<% @people_imported.each do |person| %>
+	  <li><%= person.full_name %>
+		 <% if person.errors.empty? %>
+		   <span class="success">SUCCESS!</span>
+		 <% else -%>
+		   <span class="error">ERROR</span>
+		   <ul>
+			  <% person.errors.full_messages.each do |msg| -%>
+			    <li><%= msg %></li>
+			  <% end -%>
+		   </ul>
+		 <% end -%>
+	    </li>
+	<% end -%>
+	
+
+	<% if @the_upload.complete? %>
+			<%= link_to "Continue...", church_path(@church), :target => "_parent" %>
+	<% end -%>

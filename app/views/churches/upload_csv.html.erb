@@ -11,16 +11,15 @@
 	</div>
 <% else -%>
     <b>Successfully uploaded your file with <%= @the_upload.num_rows %> rows.</b>
-	<p>
-		<%= link_to "Start updating in batches...", handle_upload_update_church_path(@church, :upload_id => @the_upload.id) %>
+	<p id="startbutton">
+		<%= link_to "Start updating in batches...", handle_upload_update_church_path(@church, :upload_id => @the_upload.id), :remote => true %>
     </p>
 
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	<div id="importresults_msg" style="padding: 10px;">
+	</div>
+	
+	<div id="importresults_list" style="height: 400px; overflow: scroll; position: relative;">
+	</div>
 
 
 <% end -%>

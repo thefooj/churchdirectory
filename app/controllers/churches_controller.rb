@@ -78,7 +78,6 @@ class ChurchesController < ApplicationController
       if @the_upload.reload.complete?
         @church.update_all_sort_names_and_household_statuses!
         @message = "DONE: Imported everyone!"
-        @people_imported = @church.people
       end
     end
   end
