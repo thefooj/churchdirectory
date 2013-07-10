@@ -1,11 +1,12 @@
 class ChurchesController < ApplicationController
   def index
+    @show_header = true
     @churches = Church.all
   end
   
   def show
     get_church or show_404
-
+    @show_header = true
   end
   
   def google_kml

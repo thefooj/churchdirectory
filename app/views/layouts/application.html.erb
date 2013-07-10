@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<% if @show_header %>
+  <%= render :partial => 'layouts/header' %>
+<% end -%>
+
 <%= yield %>
 
 
