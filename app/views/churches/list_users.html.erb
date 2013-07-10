@@ -1,0 +1,21 @@
+<h4>Users of <%= @church.name %></h4>
+
+<% if @users.empty? %>
+<p>  No users yet... </p>
+<% else %>
+<ul>
+  <% @users.each do |user| -%>
+  <li><%= user.email %></li>
+  <% end -%>
+</ul>
+<% end %>
+
+<%= form_tag(add_user_church_path(@church), :method => 'post') do %>
+ Add a new user by email: <%= text_field_tag(:email, '', :size => 40, :placeholder => "Enter User Email" )%>
+ <%= submit_tag("Add this user")%>
+<% end -%>
+
+<br />
+<br />
+<br />
+<br />

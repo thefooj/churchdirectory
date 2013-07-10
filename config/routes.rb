@@ -13,6 +13,8 @@ Churchdirectory::Application.routes.draw do
       get 'mobile_directory'
       get 'google_kml'
       post 'clear_church_data'
+      get 'list_users'
+      post 'add_user'
     end
   end
 

@@ -2,6 +2,8 @@
 class Church < ActiveRecord::Base
   has_many :people
   has_many :csv_uploads
+  has_many :church_users
+  has_many :users, :through => :church_users
   
   def to_param
     self.urn
@@ -90,5 +92,22 @@ class Church < ActiveRecord::Base
     imported_people
   end
   
+  def add_user_by_email(email)
+    u = User.find_by_email(email)
+    unless u.present?
+      raise StandardError, "Cannot find a user with email #{email}"
+    end
+    if self.users.where(:email => email).count > 0
+      raise StandardError, "Already have #{email} as a user of this church"
+    end
+    
+    if u.present?
+      self.church_users.build(:user_id => u.id).save!
+    end
+  end
+
+  def includes_user?(user)
+    user.present? && user.is_a?(User) && self.users.where(["users.id = ?", user.id]).count > 0
+  end
 
 end

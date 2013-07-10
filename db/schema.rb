@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708134006) do
+ActiveRecord::Schema.define(:version => 20130710131926) do
+
+  create_table "church_users", :force => true do |t|
+    t.integer "church_id"
+    t.integer "user_id"
+    t.boolean "admin"
+  end
+
+  add_index "church_users", ["church_id", "user_id"], :name => "index_church_users_on_church_id_and_user_id", :unique => true
+  add_index "church_users", ["user_id"], :name => "index_church_users_on_user_id"
 
   create_table "churches", :force => true do |t|
     t.string "name"

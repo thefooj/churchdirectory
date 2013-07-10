@@ -1,7 +1,7 @@
 class ChurchesController < ApplicationController
   def index
     @show_header = true
-    @churches = Church.all
+    @churches = current_user.churches.all
   end
   
   def show
@@ -83,11 +83,31 @@ class ChurchesController < ApplicationController
     end
   end
   
+  def list_users
+    get_church or show_404
+
+    @users = @church.users.order("email asc").all
+  end
+  
+  def add_user
+    get_church or show_404
+    user_email = params[:email]
+    
+    begin
+      @church.add_user_by_email(user_email)
+      flash[:notice] = "Thanks - added #{user_email} to #{@church.name}"
+    rescue => e
+      flash[:error] = "There was a problem: #{e.message}"
+    end
+    redirect_to list_users_church_path(@church)
+  end
+  
   protected
   
   def get_church
     @church = Church.find_by_urn(params[:id])
     return false if @church.nil?
+    return false unless @church.includes_user?(current_user)
     @church
   end
   

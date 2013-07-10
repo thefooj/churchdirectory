@@ -1,6 +1,12 @@
-
-<ul>
-<% @churches.each do |church| %>
-  <li><%= link_to church.name, church_path(church) %></li>
+<% if @churches.count == 0 -%>
+  <h3>Almost There...</h3>
+ <p> Sorry, you don't have access to any churches yet. </p>
+ <p> Contact your church administrator to get access.</p>
+<% else %>
+  <h3>Your Churches...</h3>
+	<ul>
+	<% @churches.each do |church| %>
+	  <li><%= link_to church.name, church_path(church) %></li>
+	<% end -%>
+	</ul>
 <% end -%>
-</ul>
