@@ -12,7 +12,7 @@
 <% else -%>
     <b>Successfully uploaded your file with <%= @the_upload.num_rows %> rows.</b>
 	<p id="startbutton">
-		<%= link_to "Start updating in batches...", handle_upload_update_church_path(@church, :upload_id => @the_upload.id), :remote => true %>
+		<%= link_to "Start updating in batches...", handle_upload_update_church_path(@church, :upload_id => @the_upload.id),  :class => 'bigbutton', :remote => true %>
     </p>
 
 	<div id="importresults_msg" style="padding: 10px;">

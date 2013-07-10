@@ -73,7 +73,7 @@ class ChurchesController < ApplicationController
     if @the_upload.present?
       @people_imported = @church.import_directory_info_from_church_membership_online_csv(@the_upload, 10)
       if @people_imported.count > 0
-        @message = "Imported #{@people_imported.count} people.  #{@the_upload.percent_complete}% complete"
+        @message = "Imported #{@the_upload.num_complete} people so far.  #{@the_upload.percent_complete}% complete"
       end
       
       if @the_upload.reload.complete?

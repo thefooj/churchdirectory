@@ -18,6 +18,10 @@ class CsvUpload < ActiveRecord::Base
     end
   end
 
+  def num_complete
+    self.csv_upload_rows.where("status = 'Complete'").count
+  end
+
   def percent_complete
     (100 * (self.csv_upload_rows.where("status = 'Complete'").count).to_f / (self.csv_upload_rows.count).to_f).to_i
   end
