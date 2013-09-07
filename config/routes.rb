@@ -10,6 +10,7 @@ Churchdirectory::Application.routes.draw do
       get 'upload_csv_form'
       get 'handle_upload_update'
       get 'directory'
+      get 'simplified_directory'
       get 'mobile_directory'
       get 'google_kml'
       post 'clear_church_data'

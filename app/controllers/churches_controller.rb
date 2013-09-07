@@ -19,6 +19,11 @@ class ChurchesController < ApplicationController
     get_members
   end
   
+  def simplified_directory
+    get_church or show_404
+    get_members    
+  end
+  
   def mobile_directory
     get_church or show_404
     get_members

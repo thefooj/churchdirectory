@@ -7,7 +7,7 @@
       <% rowblanks = @cols_per_page - row.count -%>
       <% row.each do |col| %>
          <td>
-		  <%= render :partial => 'directory_person_entry', :locals => { :person => col } %>
+		  <%= render :partial => 'directory_person_entry', :locals => { :person => col, :show_details => show_details } %>
 	     </td>
       <% end -%>
       <% rowblanks.times do -%>

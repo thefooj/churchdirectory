@@ -10,6 +10,7 @@
 	<div class="maininfo">
 		<div class="name"><%= person.full_name %></div>
 		<div class="addr">
+		 <% if show_details %>
 		    <% if person.street_address.present? %>
 			<%= person.street_address_short %><br />
 			<% end -%>
@@ -17,6 +18,12 @@
 			<%= person.city %>,
 			<% end -%> 
 			<%= person.state_abbrev %> <%= person.zip_code_short %>
+		 <% else %>
+			<% if person.city.present? %>
+			<%= person.city %>,
+			<% end -%> 
+			<%= person.state_abbrev %>
+		 <% end %>
 		</div>
 		<div class="contact">
 			<% if person.email_address.present? -%>
