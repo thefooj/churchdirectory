@@ -22,7 +22,7 @@
 			<% if person.city.present? %>
 			<%= person.city %>,
 			<% end -%> 
-			<%= person.state_abbrev %>
+			<%= person.state_abbrev %> <%= person.zip_code_short %>
 		 <% end %>
 		</div>
 		<div class="contact">
