@@ -17,3 +17,5 @@ local-notes.txt
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+.idea/

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130710131926) do
+ActiveRecord::Schema.define(:version => 20140322193229) do
 
   create_table "church_users", :force => true do |t|
     t.integer "church_id"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(:version => 20130710131926) do
   create_table "churches", :force => true do |t|
     t.string "name"
     t.string "urn"
+    t.string "short_name"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "website"
+    t.string "phone"
+    t.text   "front_page_content"
   end
 
   add_index "churches", ["urn"], :name => "index_churches_on_urn", :unique => true
