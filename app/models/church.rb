@@ -1,5 +1,12 @@
 
 class Church < ActiveRecord::Base
+
+  validates :urn, :uniqueness => true, :presence => true
+
+  attr_accessible :short_name, :name, :address1, :address2, :city, :state, :zip, :website, :phone, :front_page_content, :big_logo, :no_pic
+  has_attached_file :no_pic, :styles => {:medium => '300x300>', :thumb => '100x100>' }
+  has_attached_file :big_logo
+
   has_many :people
   has_many :csv_uploads
   has_many :church_users
@@ -110,4 +117,16 @@ class Church < ActiveRecord::Base
     user.present? && user.is_a?(User) && self.users.where(["users.id = ?", user.id]).count > 0
   end
 
+  def short_name_prioritized
+    self.short_name || self.name
+  end
+
+  def address_compressed
+    the_address = self.address1
+    the_address += ", #{address2}" if self.address2.present?
+    the_address += ", #{city}" if self.city.present?
+    the_address += ", #{state}" if self.state.present?
+    the_address += " #{zip}" if self.zip.present?
+    the_address
+  end
 end

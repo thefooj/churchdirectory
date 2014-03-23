@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140322193229) do
+ActiveRecord::Schema.define(:version => 20140323014850) do
 
   create_table "church_users", :force => true do |t|
     t.integer "church_id"
@@ -23,17 +23,25 @@ ActiveRecord::Schema.define(:version => 20140322193229) do
   add_index "church_users", ["user_id"], :name => "index_church_users_on_user_id"
 
   create_table "churches", :force => true do |t|
-    t.string "name"
-    t.string "urn"
-    t.string "short_name"
-    t.string "address1"
-    t.string "address2"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.string "website"
-    t.string "phone"
-    t.text   "front_page_content"
+    t.string   "name"
+    t.string   "urn"
+    t.string   "short_name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "website"
+    t.string   "phone"
+    t.text     "front_page_content"
+    t.string   "no_pic_file_name"
+    t.string   "no_pic_content_type"
+    t.integer  "no_pic_file_size"
+    t.datetime "no_pic_updated_at"
+    t.string   "big_logo_file_name"
+    t.string   "big_logo_content_type"
+    t.integer  "big_logo_file_size"
+    t.datetime "big_logo_updated_at"
   end
 
   add_index "churches", ["urn"], :name => "index_churches_on_urn", :unique => true

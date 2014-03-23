@@ -1,0 +1,5 @@
+<%= form_for @church, :url => {:action => "update"}, :html => {:class => "nifty_form"} do |f| %>
+
+  <%= render :partial => 'church_form', :locals => {:f => f} %>
+
+<% end %>

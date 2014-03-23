@@ -5,11 +5,11 @@
 
     <%= render :partial => 'title_page' %>
 
-	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.name} Members as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true } %>
+	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true } %>
 
 
 	<div class="members-page" id="members-page-households" style="min-height: 1000px;">
-		<h2><%= @church.name %> Households and Children</h2>
+		<h2><%= @church.short_name_prioritized %> Households and Children</h2>
 
 		<table id="households-listing" style="">
 			<tr>

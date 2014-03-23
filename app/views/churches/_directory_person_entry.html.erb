@@ -3,7 +3,7 @@
 		<% if person.photo.present? %>
 		  <%= image_tag person.photo.url %>
 		<% else -%>
-		  <%= image_tag "/noimage-crown.jpg" %>
+		  <%= image_tag (@church.no_pic.present? ? @church.no_pic.url : "/noimage-crown.jpg") %>
 		<% end -%>
 	</div>
 	

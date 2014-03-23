@@ -4,7 +4,7 @@ Churchdirectory::Application.routes.draw do
 
   root :to => 'churches#index'
   
-  resources :churches, :only => [:show, :index] do
+  resources :churches, :only => [:show, :index, :edit, :update] do
     member do 
       post 'upload_csv'
       get 'upload_csv_form'

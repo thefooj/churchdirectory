@@ -71,6 +71,7 @@ img.option_image:hover {
 
 <h4 style="margin-bottom: 5px;">Admin Tools:</h4>
 <ul>
+<li><%= link_to "Update Church Info", edit_church_path(@church) %></li>
 <li><%= link_to "Update Member Info", upload_csv_form_church_path(@church), :class => 'fancybox fancybox.iframe' %></li>
 <li><%= link_to "List/Add Administrators", list_users_church_path(@church), :class => 'fancybox fancybox.iframe' %></li>
 </ul>

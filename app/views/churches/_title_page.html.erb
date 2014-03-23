@@ -1,16 +1,21 @@
 <div class="titlepage  page-break">
-	<img src="/DRBC_Logo.jpg">
+  <% if @church.big_logo.present? %>
+    <%= image_tag(@church.big_logo.url) %>
+  <% else %>
+    <h1><%= @church.name %></h1>
+  <% end %>
 	<h2>Member Directory</h2>
 	<h3>(as of <%= Date.today.strftime('%B %-d, %Y') %>)</h3>
 	
 	<div class="address">
-		2405 Russell Road, Alexandria, VA 22301<br />
-		703-549-8116  &nbsp;&nbsp;&nbsp; www.delraybaptist.org
+		<%= @church.address_compressed %><br />
+		<%= @church.phone %>  <% if @church.phone.present? && @church.website.present? %>&nbsp;&nbsp;&nbsp; <%= @church.website %><% end %>
 	</div>
 	
 	<%# Note... use http://www.esvapi.org/v2/rest/passageQuery?key=IP&passage=Ephesians+2:2&include-passage-references=false&include-footnotes=false&include-verse-numbers=false %>
 	<div class="scripture">
-		"And he came and preached peace to you who were far off and peace to those who were near. For through him we both have access in one Spirit to the Father. So then you are no longer strangers and aliens, but you are fellow citizens with the saints and members of the household of God, built on the foundation of the apostles and prophets, Christ Jesus himself being the cornerstone, in whom the whole structure, being joined together, grows into a holy temple in the Lord."
-		 Ephesians 2:17-21 ESV
+    <% @church.front_page_content.each_line do |line| %>
+      <%= line %><br />
+    <% end %>
 	</div>
 </div>

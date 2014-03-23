@@ -8,6 +8,20 @@ class ChurchesController < ApplicationController
     get_church or show_404
     @show_header = true
   end
+
+  def edit
+    get_church or show_404
+  end
+
+  def update
+    get_church or show_404
+    if @church.update_attributes(params[:church])
+      flash[:notice] = "Successfully Updated #{@church.name}"
+      redirect_to(church_path(@church.urn))
+    else
+      flash[:error] = "There were errors.  Please fix them"
+    end
+  end
   
   def google_kml
     get_church or show_404

@@ -5,7 +5,10 @@ task :setup_church, [:urn,:name] => :environment do |t, args|
   
   church = Church.find_by_urn(urn)
   if church.nil?
-    church = Church.create(:urn => urn, :name => name)
+    church = Church.new
+    church.urn = urn
+    church.name = name
+    church.save!
   end
 end
 

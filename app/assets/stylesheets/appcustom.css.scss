@@ -120,6 +120,10 @@ a:hover {
     text-align: center;
     color: #333333;
     font-family: Century Gothic, sans-serif;
+  h1 {
+    font-size: 72px;
+    text-align: center;
+  }
     h2 {
         font-size: 68px;
         text-align: center;
@@ -136,7 +140,7 @@ a:hover {
         line-height: 30px;
     }
     .scripture {
-        text-align: left;
+        text-align: center;
         width: 800px;
         font-style: italic;
         font-size: 26px;
