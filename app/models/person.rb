@@ -189,15 +189,24 @@ class Person < ActiveRecord::Base
     options = [
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Married').first,
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Divorced').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Divorced').first,
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Single').first,
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Single').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Unknown').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Unknown').first,
     ]
     options.compact.first
   end
   
   def self.spouse_of_household(church_id, household_identifier)
     head_of_house = self.head_of_household(church_id, household_identifier)
-    likely_wife = self.where(:church_id => church_id).where("id <> ?", head_of_house.id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first
+    if head_of_house.nil?
+      Rails.logger.debug("Missing Head of Household for #{household_identifier}")
+      return nil
+    end
+
+    likely_wife = self.where(:church_id => church_id).where("id <> ?", head_of_house.try(:id)).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Married').first
     return likely_wife
   end
   

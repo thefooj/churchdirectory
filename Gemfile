@@ -9,7 +9,9 @@ gem 'rails', '3.2.11'
 gem 'mysql2'
 gem 'nokogiri'
 
-gem "pg", :group => :production
+group :production do
+   gem "pg"
+end
 gem "wicked_pdf"
 # Gems used only for assets and not required
 # in production environments by default.
@@ -34,7 +36,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'capistrano'
   gem 'capistrano_colors'
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'debugger'
 end
 
 

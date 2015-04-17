@@ -14,8 +14,10 @@
 	
 	<%# Note... use http://www.esvapi.org/v2/rest/passageQuery?key=IP&passage=Ephesians+2:2&include-passage-references=false&include-footnotes=false&include-verse-numbers=false %>
 	<div class="scripture">
+    <% if @church.front_page_content %>
     <% @church.front_page_content.each_line do |line| %>
       <%= line %><br />
     <% end %>
+    <% end -%>
 	</div>
 </div>
