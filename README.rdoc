@@ -43,3 +43,13 @@ Debugging:
 ```bash
 heroku logs
 ```
+
+Dealing with Database Sizes:
+
+We sometimes get warnings about database sizes being too large.  This is usually due to CSV upload rows.
+
+```bash
+heroku rake table_sizes
+heroku rake truncate_csv_log
+```
+
