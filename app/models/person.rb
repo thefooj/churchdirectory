@@ -224,14 +224,17 @@ class Person < ActiveRecord::Base
     hhids.each do |hhid|
       head_oh = head_of_household(church_id, hhid)
       spouse_oh = spouse_of_household(church_id, hhid)
+
       full_name = ""
       if spouse_oh.present?
+        puts "In spouse-of-household... Missing Head of Household for #{hhid}" if head_oh.nil?
         if head_oh.last_name == spouse_oh.last_name
           full_name = "#{head_oh.last_name}, #{head_oh.first_name} and #{spouse_oh.first_name}"
         else
           full_name = "#{head_oh.last_name}, #{head_oh.first_name} and #{spouse_oh.last_name}, #{spouse_oh.first_name}"
         end
       else
+        puts "Missing Head of Household for #{hhid}" if head_oh.nil?
         full_name = "#{head_oh.last_name}, #{head_oh.first_name}"
       end
       household = {
