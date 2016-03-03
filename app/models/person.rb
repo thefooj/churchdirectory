@@ -195,6 +195,8 @@ class Person < ActiveRecord::Base
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Single').first,
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Male', :marital_status_name => 'Unknown').first,
       self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :gender_name => 'Female', :marital_status_name => 'Unknown').first,
+      self.where(:church_id => church_id).where("member_type <> 'Dependent'").where(:household_id => household_identifier, :member_age_category_name => 'Adult', :marital_status_name => 'Widowed').first,
+      self.where(:church_id => church_id).where(:household_id => household_identifier).first,
     ]
     options.compact.first
   end
