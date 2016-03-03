@@ -75,7 +75,7 @@ class Church < ActiveRecord::Base
           :email_address => rowhash['Email'],
           :country_name => rowhash['Country'],
           :member_type => rowhash['Member Type'],
-          :notes => rowhash['Notes'],
+          :notes => '', #   Was too long.  ignore.  rowhash['Notes'],
           :gender_name => rowhash['Gender'],
           :member_age_category_name => rowhash['Age Category'],
           :marital_status_name => rowhash["Marital Status"])
