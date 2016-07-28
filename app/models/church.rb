@@ -62,7 +62,7 @@ class Church < ActiveRecord::Base
       CSV.parse(the_csv, :headers => true) do |row|
         rowhash = row.to_hash
 
-        next if (rowhash['First Name'].empty? || rowhash['Last Name'].empty? || rowhash['Last Name'] == 'Anonymous')
+        next if (rowhash['First Name'].blank? || rowhash['Last Name'].blank? || rowhash['Last Name'] == 'Anonymous')
 
         newperson = people.build(
           :member_id => rowhash['IndividualId'],
