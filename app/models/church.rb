@@ -62,29 +62,31 @@ class Church < ActiveRecord::Base
       CSV.parse(the_csv, :headers => true) do |row|
         rowhash = row.to_hash
 
-        next if (rowhash['First Name'].blank? || rowhash['Last Name'].blank? || rowhash['Last Name'] == 'Anonymous')
+        unless (rowhash['First Name'].blank? || rowhash['Last Name'].blank? || rowhash['Last Name'] == 'Anonymous')
 
-        newperson = people.build(
-          :member_id => rowhash['IndividualId'],
-          :household_id => rowhash['HouseholdId'],
-          :first_name => rowhash['First Name'],
-          :last_name => rowhash['Last Name'],
-          :street_address => rowhash['Street Address'],
-          :city => rowhash['City'],
-          :state => rowhash['State / Province'],
-          :zip_code => rowhash['Postal Code'],
-          :phone => rowhash['Phone'],
-          :mobile => rowhash['Mobile'],
-          :email_address => rowhash['Email'],
-          :country_name => rowhash['Country'],
-          :member_type => rowhash['Member Type'],
-          :notes => '', #   Was too long.  ignore.  rowhash['Notes'],
-          :gender_name => rowhash['Gender'],
-          :member_age_category_name => rowhash['Age Category'],
-          :marital_status_name => rowhash["Marital Status"])
-        newperson.save
-        newperson.update_photo_from_server!
-        imported_people << newperson
+          newperson = people.build(
+            :member_id => rowhash['IndividualId'],
+            :household_id => rowhash['HouseholdId'],
+            :first_name => rowhash['First Name'],
+            :last_name => rowhash['Last Name'],
+            :street_address => rowhash['Street Address'],
+            :city => rowhash['City'],
+            :state => rowhash['State / Province'],
+            :zip_code => rowhash['Postal Code'],
+            :phone => rowhash['Phone'],
+            :mobile => rowhash['Mobile'],
+            :email_address => rowhash['Email'],
+            :country_name => rowhash['Country'],
+            :member_type => rowhash['Member Type'],
+            :notes => '', #   Was too long.  ignore.  rowhash['Notes'],
+            :gender_name => rowhash['Gender'],
+            :member_age_category_name => rowhash['Age Category'],
+            :marital_status_name => rowhash["Marital Status"])
+          newperson.save
+          newperson.update_photo_from_server!
+          imported_people << newperson
+        end
+        
       end
       
       csvrow.mark_complete!
