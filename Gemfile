@@ -31,7 +31,6 @@ gem 'aws-sdk'
 
 gem 'geocoder' 
 gem 'devise'
-gem 'jquery-rails'
 
 group :development, :test do
   gem 'capistrano'

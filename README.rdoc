@@ -38,6 +38,12 @@ Set up a church:
 heroku rake setup_church[churchurn,DRBC]  # won't let you have spaces and quotes
 ```
 
+Add user to a church:
+
+```bash
+heroku rake add_church_user[churchurn,email]
+```
+
 Debugging:
 
 ```bash
