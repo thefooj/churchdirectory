@@ -26,8 +26,11 @@
 		 <% end %>
 		</div>
 		<div class="contact">
-			<% if person.email_address.present? -%>
+			<% if person.email_address.present? && person.email_address.length < 30 -%>
 			<%= mail_to person.email_address %><br />
+			<% end -%>
+			<% if person.email_address.present? && person.email_address.length >= 30 -%>
+			<span class="email-long"><%= mail_to person.email_address %><br /></span>
 			<% end -%>
 			<% if person.phone.present? -%>
 			<%= person.phone %><br />
