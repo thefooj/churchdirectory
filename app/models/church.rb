@@ -86,7 +86,7 @@ class Church < ActiveRecord::Base
           newperson.update_photo_from_server!
           imported_people << newperson
         end
-        
+
       end
       
       csvrow.mark_complete!
