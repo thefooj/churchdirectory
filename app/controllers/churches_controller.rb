@@ -132,7 +132,7 @@ class ChurchesController < ApplicationController
   
   def get_members
     @members = @church.members
-    @non_attending_members = @church.non_attending_members
+    @moved_members = @church.moved_members
     @households = @church.sorted_households    
   end
   

@@ -29,15 +29,16 @@ class Church < ActiveRecord::Base
   end
   
   def members
-    self.people.where(:member_type => ['Member', 'Non-Attending']).order("sort_name asc")
+    self.people.where(:member_type => ['Member', 'Member Out-of-Area']).order("sort_name asc")
   end
 
   def attending_members
     self.people.where(:member_type => 'Member').order("sort_name asc")
   end
 
-  def non_attending_members
-    self.people.where(:member_type => 'Non-Attending').order("sort_name asc")
+  #Members who are out of the area denoted as 'Member Out-of-Area' in member type
+  def moved_members
+    self.people.where(:member_type => 'Member Out-of-Area').order("sort_name asc")
   end
 
   def sorted_households

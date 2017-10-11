@@ -1,4 +1,5 @@
 <% objects_to_pages_columns_and_rows(memberlist, rows_per_page, cols_per_page).each do |pagedata| %>
+<% @members_pages_count = @members_pages_count + 1 %>
 <div class="members-page  page-break" id="members-page-<%= pagedata[:pagenum] %>">
 	<h2><%= title %></h2>
  	   <table class="memberlist-matrix" id="members-page-table-<%= pagedata[:pagenum] %>">
@@ -7,7 +8,7 @@
       <% rowblanks = @cols_per_page - row.count -%>
       <% row.each do |col| %>
          <td>
-		  <%= render :partial => 'directory_person_entry', :locals => { :person => col, :show_details => show_details } %>
+		     <%= render :partial => 'directory_person_entry', :locals => { :person => col, :show_details => show_details } %>
 	     </td>
       <% end -%>
       <% rowblanks.times do -%>
@@ -17,6 +18,8 @@
    <% end -%>
    </table>
 
-   <div class="pagenum">Page <%= pagedata[:pagenum] %> <%= page_num_extra if defined?(page_num_extra) %></div>
+   <div class="pagenum">Page <%= pagedata[:pagenum] if !out_of_area %> <%= @members_pages_count if out_of_area %> <%= page_num_extra if defined?(page_num_extra) %>
+   
+   </div>
 </div>
 <% end -%>
