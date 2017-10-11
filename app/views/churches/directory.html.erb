@@ -1,12 +1,17 @@
 <% 
   @rows_per_page = 6
   @cols_per_page = 3
+  #keeps track of moved members page number
+  @members_pages_count = 0
 %>
 
     <%= render :partial => 'title_page' %>
 
-	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true } %>
+	<!-- members list -->
+	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.attending_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true, :out_of_area => false } %>
 
+	<!-- moved members are marked as 'Non-Attending' -->
+	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members Out of Area as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.non_attending_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true, :out_of_area => true } %>
 
 	<div class="members-page" id="members-page-households">
 		<h2><%= @church.short_name_prioritized %> Households and Children</h2>
