@@ -18,8 +18,6 @@
    <% end -%>
    </table>
 
-   <div class="pagenum">Page <%= pagedata[:pagenum] if !out_of_area %> <%= @members_pages_count if out_of_area %> <%= page_num_extra if defined?(page_num_extra) %>
-   
-   </div>
+   <div class="pagenum">Page <%= pagedata[:pagenum] if !out_of_area %> <%= @members_pages_count if out_of_area %> <%= page_num_extra if defined?(page_num_extra) %></div>
 </div>
 <% end -%>
