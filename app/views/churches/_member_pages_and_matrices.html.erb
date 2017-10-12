@@ -1,4 +1,5 @@
 <% objects_to_pages_columns_and_rows(memberlist, rows_per_page, cols_per_page).each do |pagedata| %>
+<% if !@members_pages_count then @members_pages_count = 0 end %>
 <% @members_pages_count = @members_pages_count + 1 %>
 <div class="members-page  page-break" id="members-page-<%= pagedata[:pagenum] %>">
 	
