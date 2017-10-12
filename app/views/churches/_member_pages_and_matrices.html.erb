@@ -1,7 +1,15 @@
 <% objects_to_pages_columns_and_rows(memberlist, rows_per_page, cols_per_page).each do |pagedata| %>
 <% @members_pages_count = @members_pages_count + 1 %>
 <div class="members-page  page-break" id="members-page-<%= pagedata[:pagenum] %>">
-	<h2><%= title %></h2>
+	
+	<% if out_of_area %>
+		<div class="moved-members-message">
+		   <h2><%= title %></h2>
+		   These are members who have recently moved who we have covenanted to watch over until they have found another local church. Please pray that God would care for them and lead them to another local fellowship.
+		</div>
+	<% else %>
+	   <h2><%= title %></h2>
+	<% end %>
  	   <table class="memberlist-matrix" id="members-page-table-<%= pagedata[:pagenum] %>">
    <% pagedata[:matrix].each do |row| %>
       <tr>

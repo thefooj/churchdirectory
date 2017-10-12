@@ -14,7 +14,7 @@
 	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members Out of Area as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.moved_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true, :out_of_area => true } %>
 
 	<div class="members-page" id="members-page-households">
-		<h2><%= @church.short_name_prioritized %> Households and Children as of <%= Date.today.strftime('%B %-d, %Y') %></h2>
+		<h2><%= @church.short_name_prioritized %> Households with Children as of <%= Date.today.strftime('%B %-d, %Y') %></h2>
 		<table id="households-listing" class="wrap-cells-to-next-page">
 			
 			<tbody>
