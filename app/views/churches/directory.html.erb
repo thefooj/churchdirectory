@@ -14,19 +14,20 @@
 	<%= render :partial => 'member_pages_and_matrices', :locals => { :title => "#{@church.short_name_prioritized} Members Out of Area as of #{Date.today.strftime('%B %-d, %Y')}", :memberlist => @church.moved_members, :rows_per_page => @rows_per_page, :cols_per_page => @cols_per_page, :show_details => true, :out_of_area => true } %>
 
 	<div class="members-page" id="members-page-households">
-		<h2><%= @church.short_name_prioritized %> Households and Children</h2>
-
-		<table id="households-listing" style="">
+		<h2><%= @church.short_name_prioritized %> Households and Children as of <%= Date.today.strftime('%B %-d, %Y') %></h2>
+		<table id="households-listing" class="wrap-cells-to-next-page">
+			
+			<tbody>
 			<tr>
-				<td valign="top" align="left">
+				<td valign="top" align="left" style="max-width:220px;max-height:1150px;">
 		<% @hh_lines_iter = 0 -%>
-		<% @hh_lines_per_col = 45 -%>
+		<% @hh_lines_per_col = 52 -%>
 		<% @church.sorted_households.each do |hh| %>
 		 <% unless hh[:children].empty? %>
 		
 		 <% if @hh_lines_iter > @hh_lines_per_col %>
 		        </td>
-		        <td valign="top" align="left">
+		        <td valign="top" align="left" style="max-width:220px;max-height:1150px;">
 			  <% @hh_lines_iter = 0 %>
 		 <% end %>
 		 <div class="household">
@@ -46,5 +47,6 @@
 		<% end -%>
 				</td>
 			</tr>
+			</tbody>
 		</table>
 	</div>
